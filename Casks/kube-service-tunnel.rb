@@ -3,7 +3,7 @@ cask "kube-service-tunnel" do
   name "kube-service-tunnel"
   desc "Interactive TUI for Kubernetes service port forwarding and DNS management"
   homepage "https://github.com/hei5enbug/kube-service-tunnel"
-  version "0.1.0"
+  version "0.1.1"
 
   livecheck do
     skip "Auto-generated on release."
@@ -14,22 +14,28 @@ cask "kube-service-tunnel" do
   on_macos do
     on_intel do
       url "https://github.com/hei5enbug/kube-service-tunnel/releases/download/v#{version}/kube-service-tunnel_darwin_amd64.tar.gz"
-      sha256 "a56bcc4ce19f2eb58037363a4643b8c44a5366a4b082e77540be6bbcf240eab9"
+      sha256 "03d290498a1bea36240176ae90567f6c15660e4ef6c52f67631b17f3558d7e38"
     end
     on_arm do
       url "https://github.com/hei5enbug/kube-service-tunnel/releases/download/v#{version}/kube-service-tunnel_darwin_arm64.tar.gz"
-      sha256 "4a24b1b25a2d665ed15e95325201154a1af07d4742020466de3f08fee02efaba"
+      sha256 "13b2a32f3e1f6b01b82113aa7bae439cd2b1ab2fe16fb7001658fbf9eb404267"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/hei5enbug/kube-service-tunnel/releases/download/v#{version}/kube-service-tunnel_linux_amd64.tar.gz"
-      sha256 "4934bac84c9d863fa85678418cc4c07381863efd1b0bc1186f2b3981a009d84b"
+      sha256 "38e3470d40a27ebde3a5d2f380d3155565eb9d4251401df07e1dd6a4a89a0469"
     end
     on_arm do
       url "https://github.com/hei5enbug/kube-service-tunnel/releases/download/v#{version}/kube-service-tunnel_linux_arm64.tar.gz"
-      sha256 "22cf547b628ae0cea95826aa3cc492406212aa0bbcdcaeb9c4f6d756ea3d697e"
+      sha256 "c760faa799ad411a590f7fd7930c6ce515c06e40b6562b5e9aef4513aa665051"
+    end
+  end
+
+  postflight do
+    if OS.mac?
+      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/kube-service-tunnel"]
     end
   end
 
